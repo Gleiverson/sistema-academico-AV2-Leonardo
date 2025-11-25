@@ -2,27 +2,42 @@ package com.example.sistema_academico.controller;
 
 import com.example.sistema_academico.model.Aluno;
 import com.example.sistema_academico.repository.AlunoRepository;
+import com.example.sistema_academico.model.Curso; // Importante
+import com.example.sistema_academico.repository.CursoRepository; // Importante
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // Diz que essa classe recebe pedidos da internet (JSON)
-@RequestMapping("/alunos") // O endereço será: seusite.com/alunos
+@RestController
+@RequestMapping("/alunos")
 public class AlunoController {
 
-    @Autowired // O Spring injeta o repositório aqui automaticamente
+    @Autowired
     private AlunoRepository alunoRepository;
 
-    // 1. Listar todos os alunos (GET)
+    @Autowired
+    private CursoRepository cursoRepository; // Precisamos disso para a matrícula
+
+    // 1. Listar (GET)
     @GetMapping
     public List<Aluno> listarTodos() {
         return alunoRepository.findAll();
     }
 
-    // 2. Cadastrar um novo aluno (POST)
+    // 2. Criar Aluno (POST)
     @PostMapping
     public Aluno criarAluno(@RequestBody Aluno aluno) {
+        return alunoRepository.save(aluno);
+    }
+
+    // 3. MATRÍCULA (O botão que estava faltando!)
+    @PostMapping("/{idAluno}/matricula/{idCurso}")
+    public Aluno matricular(@PathVariable Long idAluno, @PathVariable Long idCurso) {
+        Aluno aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+        Curso curso = cursoRepository.findById(idCurso).orElseThrow(() -> new RuntimeException("Curso não encontrado"));
+        
+        aluno.getCursos().add(curso);
         return alunoRepository.save(aluno);
     }
 }

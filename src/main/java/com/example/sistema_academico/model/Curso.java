@@ -4,7 +4,7 @@
  */
 package com.example.sistema_academico.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class Curso {
     private int cargaHoraria; // [cite: 78]
 
     @ManyToMany(mappedBy = "cursos") // Diz que a lista de alunos está controlada do outro lado
+    @JsonIgnore
     private List<Aluno> alunos = new ArrayList<>();
 
     // --- Construtores e Getters/Setters (O jeito de acessar os dados) ---
