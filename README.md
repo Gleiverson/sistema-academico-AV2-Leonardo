@@ -33,3 +33,7 @@ A documentação completa dos endpoints pode ser visualizada através do **Swagg
 
 ---
 **Desenvolvido por:** [Gleiverson Ferreira Vinagre]
+
+## ⚠️ Observação sobre Monitoramento e Docker
+Devido a limitações de hardware e sistema operacional (Windows 7), não foi possível realizar a configuração do ambiente Docker para rodar o Prometheus e Grafana conforme sugerido no roteiro. 
+O foco do trabalho foi na implementação robusta do Backend (Spring Boot), Segurança, Documentação (Swagger) e Deploy na Nuvem (Render).
